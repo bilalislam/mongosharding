@@ -1,6 +1,6 @@
 # mongosharding
 
-#localhost sharding in mongo 
+# localhost sharding in mongo 
 ```sh
 $ mkdir rs-a-1
 $ mkdir rs-a-2
@@ -23,7 +23,7 @@ rs.initiate()
 rs.add("localhost:27018")
 rs.addArb("localhost:27024")
 
-# sharding a/b
+sharding a/b
 $ mongod --shardsvr --replSet shard-a --dbpath rs-a-1 --port 30000 --logpath rs-a-1.log --fork
 $ mongod --shardsvr --replSet shard-a --dbpath rs-a-2 --port 30001 --logpath rs-a-2.log --fork
 $ mongod --shardsvr --replSet shard-a --dbpath rs-a-3 --port 30002 --logpath rs-a-3.log --fork
@@ -42,7 +42,7 @@ rs.initiate()
 rs.add("localhost:30101")
 rs.addArb("localhost:30102")
 
-# config server 
+config server 
 $ mkdir config-1
 $ mongod --configsvr --dbpath config-1 --replSet config_replica --port 27019 --logpath config-1.log --fork
 $ mkdir config-2
@@ -77,6 +77,7 @@ mongo localhost:40000
 select the shard key by most of all hit ratio on collection
 > sh.shardCollection("cloud-docs.spreadsheets", {username: 1, _id: 1})
 
+```sh
 ------------Studio 3T IDE--------------------------------------
 use cloud-docs
 sh.enableSharding("cloud-docs")
@@ -115,13 +116,11 @@ use config
 db.chunks.count({"shard": "shard-a"})
 db.chunks.count({"shard": "shard-b"})
 
-
-sh.splitAt( "cloud-docs.spreadsheets",{ "username" : "ahmet500", "_id" : 500 })
-
+```
 
 ## zero downtime recovery
 
-#from old db
+# from old db
 ```sh
 mongodump  --out dump --host localhost --port 27017 --db cloud-docs
 ```
@@ -130,7 +129,7 @@ mongodump  --out dump --host localhost --port 27017 --db cloud-docs
 mongodump  --out dump --oplog  --host localhost --port 27017 
 ```
 
-#oplog replay
+# oplog replay
 
 ```sh
 $ mkdir -p oplog_tmp
@@ -139,7 +138,7 @@ $ cp dump/oplog.bson oplog_tmp/
 $ mongorestore --host localhost --port 40000 oplog_tmp
 ```
 
-#to new sharded db
+# to new sharded db
 ```sh
 $ mongorestore  --host localhost --port 40000 dump
 ```

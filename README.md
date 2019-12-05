@@ -12,7 +12,7 @@ $ mkdir old
 $ mkdir old2
 $ mkdir oldarb
 ```
-#old cluster
+# old cluster
 ```sh
 $ mongod  --replSet old --dbpath old --port 27017 --logpath old.log --fork
 $ mongod  --replSet old --dbpath old2 --port 27018 --logpath old2.log --fork
@@ -23,7 +23,7 @@ rs.initiate()
 rs.add("localhost:27018")
 rs.addArb("localhost:27024")
 
-#sharding a/b
+# sharding a/b
 $ mongod --shardsvr --replSet shard-a --dbpath rs-a-1 --port 30000 --logpath rs-a-1.log --fork
 $ mongod --shardsvr --replSet shard-a --dbpath rs-a-2 --port 30001 --logpath rs-a-2.log --fork
 $ mongod --shardsvr --replSet shard-a --dbpath rs-a-3 --port 30002 --logpath rs-a-3.log --fork
@@ -42,7 +42,7 @@ rs.initiate()
 rs.add("localhost:30101")
 rs.addArb("localhost:30102")
 
-#config server 
+# config server 
 $ mkdir config-1
 $ mongod --configsvr --dbpath config-1 --replSet config_replica --port 27019 --logpath config-1.log --fork
 $ mkdir config-2
@@ -69,7 +69,7 @@ mongo localhost:40000
 > db.runCommand({listshards: 1})
 
 
-#Enable Sharding  & monitoring
+# Enable Sharding  & monitoring
 
 > sh.enableSharding("cloud-docs")
 > db.getSiblingDB("config").databases.find()

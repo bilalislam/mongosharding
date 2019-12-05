@@ -62,20 +62,21 @@ connection to mongos server
 mongo localhost:40000
 > sh.addShard("shard-a/localhost:30000,localhost:30001")
 > sh.addShard("shard-b/localhost:30100,localhost:30101")
-```
 
 > db.getSiblingDB("config").shards.find()
 > use admin
 > db.runCommand({listshards: 1})
+```
 
 
 # Enable Sharding  & monitoring
-
-> sh.enableSharding("cloud-docs")
-> db.getSiblingDB("config").databases.find()
+```sh
+$ sh.enableSharding("cloud-docs")
+$ db.getSiblingDB("config").databases.find()
 
 select the shard key by most of all hit ratio on collection
-> sh.shardCollection("cloud-docs.spreadsheets", {username: 1, _id: 1})
+$ sh.shardCollection("cloud-docs.spreadsheets", {username: 1, _id: 1})
+```
 
 ```sh
 ------------Studio 3T IDE--------------------------------------
